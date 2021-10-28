@@ -70,12 +70,12 @@ public class Ventana extends JFrame {
         imagen.setLocation((screenSize.width/2) - (imagen.getWidth()/2) ,screenSize.height /2);
         panel.add(imagen);
 
-        panel.revalidate();
+        panel.paintImmediately(panel.getVisibleRect());
     }
 
     public void getProducto(String codigo){
         try {
-            ResultSet resultSet = null;
+            ResultSet resultSet;
             String query =
                     "SELECT producto_nombre, " +
                     "producto_precio, " +
@@ -96,7 +96,7 @@ public class Ventana extends JFrame {
         }
     }
 
-    public void DisplayProducto(ResultSet resultSet) throws InterruptedException {
+    public void DisplayProducto(ResultSet resultSet) {
         //cambia la informacion de los labels con los resultados de la consulta del producto
             try {
                     System.out.println("llego display producto");
@@ -112,10 +112,10 @@ public class Ventana extends JFrame {
                     ImageIcon icon = new ImageIcon(new URL(resultSet.getString(4)));
                     imagen.setIcon(new ImageIcon(icon.getImage().getScaledInstance(250,250, Image.SCALE_DEFAULT)));
 
-                    panel.revalidate();
+                    panel.paintImmediately(panel.getVisibleRect());
 
                     Thread.sleep(800);
-                    //this.setUpUI();
+                    this.setUpUI();
             } catch (Exception throwables) {
                 throwables.printStackTrace();
                 JOptionPane.showMessageDialog(this, "No se puede mostrar el artículo, en fin la hipotenusa.");
