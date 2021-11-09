@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Objects;
@@ -10,10 +9,11 @@ import java.util.Objects;
 // este proyecto está siendo desarrollado con JDK 17
 public class Ventana extends JFrame {
     private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();// se obtienen las dimensiones de la pantalla
-    private JLabel logo = new JLabel();
-    private JLabel texto = new JLabel();
-    private JLabel imagen = new JLabel();
-    private JPanel panel = new JPanel(null);
+    private final JLabel logo = new JLabel();
+    private final JLabel texto = new JLabel();
+    private final JLabel imagen = new JLabel();
+    private final JPanel panel = new JPanel(null);
+    private final JOptionPane dialogo = new JOptionPane();
     private String codigo = "";
     private  final String url = "jdbc:mysql://localhost:3306/verificador_de_precios";
     private  final String user = "root";
@@ -92,7 +92,7 @@ public class Ventana extends JFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No se puede conectar a la base de datos o no existe ese articulo, en fin la hipotenusa.");
+                JOptionPane.showMessageDialog(null, "No se puede conectar a la base de datos o no existe ese articulo, en fin la hipotenusa.");
         }
     }
 
@@ -101,7 +101,7 @@ public class Ventana extends JFrame {
             try {
                     System.out.println("llego display producto");
                     texto.setText(null);
-                    texto.setLocation((screenSize.width / 4), (screenSize.height / 2) - 100);
+                    texto.setLocation((screenSize.width/2) - (texto.getWidth()/2), (screenSize.height/3) - 100);
                     texto.setSize(600, 450);
                     texto.setText(String.format("Nombre del producto: %s \n Precio del producto: %s \n Cantidad en stock: %s",
                             resultSet.getString(1),
@@ -114,11 +114,10 @@ public class Ventana extends JFrame {
 
                     panel.paintImmediately(panel.getVisibleRect());
 
-                    Thread.sleep(800);
+                    Thread.sleep(4000);
                     this.setUpUI();
             } catch (Exception throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(this, "No se puede mostrar el artículo, en fin la hipotenusa.");
+                JOptionPane.showMessageDialog(null, "No se puede mostrar el artículo, en fin la hipotenusa.");
             }
 
     }
